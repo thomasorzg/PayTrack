@@ -1,6 +1,22 @@
-import { Button, Form, FormGroup, Label, Input, Container, Row, Col, Card, CardBody } from 'reactstrap';
+import { Container, Row, Col, Card, CardBody } from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
+import LoginForm from '../../components/auth/loginForm';
 
 const Login = () => {
+    const navigate = useNavigate();
+
+    const handleLoginSuccess = (enrollment: string, nip: string) => {
+        console.log('Matrícula:', enrollment, 'NIP:', nip);
+        // Simular la obtención de un token de autenticación después de un iniciar sesión
+        const fakeToken = '123456789';
+        localStorage.setItem('authToken', fakeToken);
+        navigate('/dashboard');
+    };
+
+    const handleCancel = () => {
+        console.log('Login cancelado');
+    };
+
     return (
         <Container className="my-5">
             <Row className="justify-content-center">
@@ -8,17 +24,7 @@ const Login = () => {
                     <Card>
                         <CardBody>
                             <h1 className="text-center">Login</h1>
-                            <Form>
-                                <FormGroup>
-                                    <Label for="username">Username</Label>
-                                    <Input type="text" name="username" id="username" placeholder="Enter username" />
-                                </FormGroup>
-                                <FormGroup>
-                                    <Label for="password">Password</Label>
-                                    <Input type="password" name="password" id="password" placeholder="Password" />
-                                </FormGroup>
-                                <Button color="danger" block>Log In</Button>
-                            </Form>
+                            <LoginForm onLogin={handleLoginSuccess} onCancel={handleCancel} />
                         </CardBody>
                     </Card>
                 </Col>
