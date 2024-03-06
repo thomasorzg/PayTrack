@@ -29,7 +29,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
         isLogged();
     }, []);
 
-    return isAuthenticated ? <Navigate to="/dashboard" replace /> : <>{children}</>;
+    return isAuthenticated ? <>{children}</> : <Navigate to="/dashboard" replace />;
 };
 
 export default PrivateRoute;
