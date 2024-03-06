@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Navbar,
   Collapse,
@@ -17,6 +17,8 @@ import user1 from "../../assets/images/users/user4.jpg";
 import Logo from "./logo";
 
 const Header = () => {
+  const navigate = useNavigate();
+
   const [isOpen, setIsOpen] = React.useState(false);
 
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
@@ -25,12 +27,19 @@ const Header = () => {
   const Handletoggle = () => {
     setIsOpen(!isOpen);
   };
+  
   const showMobilemenu = () => {
     const sidebarArea = document.getElementById("sidebarArea");
     if (sidebarArea) {
       sidebarArea.classList.toggle("showSidebar");
     }
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    navigate("/login");
+  }
+
   return (
     <Navbar color="white" light expand="md" className="fix-header">
       <div className="d-flex align-items-center">
@@ -104,7 +113,7 @@ const Header = () => {
             <DropdownItem>Perfil</DropdownItem>
             <DropdownItem>Cambiar Contraseña</DropdownItem>
             <DropdownItem divider />
-            <DropdownItem>Cerrar sesión</DropdownItem>
+            <DropdownItem onClick={handleLogout}>Cerrar sesión</DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </Collapse>
