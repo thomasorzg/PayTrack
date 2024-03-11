@@ -15,6 +15,7 @@ import {
 } from "reactstrap";
 import user1 from "../../assets/images/users/user4.jpg";
 import Logo from "./logo";
+import { useAuth } from "../../context/AuthContext";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -35,11 +36,8 @@ const Header = () => {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    navigate("/login");
-  }
-
+  const { user, isAuthenticated, logout } = useAuth();
+  
   return (
     <Navbar color="white" light expand="md" className="fix-header">
       <div className="d-flex align-items-center">
@@ -100,7 +98,7 @@ const Header = () => {
         </Nav>
         <Dropdown isOpen={dropdownOpen} toggle={toggle}>
           <DropdownToggle color="transparent">
-            <span className="me-2">Usuario</span>
+            <span className="me-2">{isAuthenticated && user && user?.name}</span>
             <img
               src={user1}
               alt="profile"
@@ -113,7 +111,7 @@ const Header = () => {
             <DropdownItem>Perfil</DropdownItem>
             <DropdownItem>Cambiar Contraseña</DropdownItem>
             <DropdownItem divider />
-            <DropdownItem onClick={handleLogout}>Cerrar sesión</DropdownItem>
+            <DropdownItem onClick={logout}>Cerrar sesión</DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </Collapse>
