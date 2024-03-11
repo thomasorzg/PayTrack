@@ -4,8 +4,7 @@ import apiService from '../../services/apiService';
 import { useAuth } from '../../context/AuthContext';
 import LoginForm from '../../components/auth/loginForm';
 import { Card, CardBody, Col, Container, Row } from 'reactstrap';
-import toastr from 'toastr'
-import 'toastr/build/toastr.min.css'
+import functionsService from '../../services/functionsService';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -21,22 +20,12 @@ const Login = () => {
 
             setLogin(response); // Aquí pasamos directamente la respuesta del servidor
             navigate('/dashboard');
-        } catch (error) {
-            handleLoginFail(error);
+        } catch (error: any) {
+            functionsService.presentAlertError(error.message);
         } finally {
             setLoading(false);
         }
     };
-
-    const handleLoginFail = async (data: any) => {
-        toastr.options = {
-            positionClass : 'toast-top-center',
-            hideDuration: 300,
-            timeOut: 60000
-        }
-
-        toastr.error(data.message);
-    }
 
     return (
         <Container className="my-5">
@@ -45,7 +34,7 @@ const Login = () => {
                     <Card>
                         <CardBody>
                             <h1 className="text-center">Inicio de sesión</h1>
-                            <LoginForm onLoginSuccess={handleLoginSuccess} onLoginFail={handleLoginFail} />
+                            <LoginForm onLoginSuccess={handleLoginSuccess} />
                         </CardBody>
                     </Card>
                 </Col>

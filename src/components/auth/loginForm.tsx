@@ -3,7 +3,6 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 interface LoginFormProps {
     onLoginSuccess: (formData: { email: string, password: string }) => void;
-    onLoginFail: (data: any) => void;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
