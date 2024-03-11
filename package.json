@@ -1,8 +1,8 @@
 {
   "name": "paytrack",
+  "version": "1.0.0",
   "author": "LT Soluciones Tecnológicas",
   "private": true,
-  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
