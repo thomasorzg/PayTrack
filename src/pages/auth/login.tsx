@@ -28,9 +28,9 @@ const Login = () => {
     };
 
     return (
-        <Container className="my-5">
+        <Container className="d-flex justify-content-center align-items-center vh-100">
             <Row className="justify-content-center">
-                <Col md="6">
+                <Col md="12">
                     <Card>
                         <CardBody>
                             <h1 className="text-center">Inicio de sesión</h1>
