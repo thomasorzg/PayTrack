@@ -12,6 +12,11 @@ const presentAlertError = (message: any) => {
     toastr.error(message);
 };
 
+const presentAlertWarning = (message: any) => {
+    toastr.options = { ...toastrOptions };
+    toastr.warning(message);
+}
+
 const presentAlertSuccess = (message: any) => {
     toastr.options = { ...toastrOptions };
     toastr.success(message);
@@ -19,5 +24,6 @@ const presentAlertSuccess = (message: any) => {
 
 export default {
     presentAlertError,
+    presentAlertWarning,
     presentAlertSuccess
 };
