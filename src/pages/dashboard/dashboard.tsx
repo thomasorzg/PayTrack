@@ -8,14 +8,14 @@ const Dashboard = () => {
               <div className="row no-gutters align-items-center">
                 <div className="col mr-2">
                   <div className="text-xs text-success text-uppercase mb-1">
-                    <b>Cuatrimestre cursando</b>
+                    <b>TOTAL DE USUARIOS</b>
                   </div>
                   <div className="h5 mb-0 text-gray-800">
-                    Octavo Cuatrimestre
+                    34 usuarios registrados
                   </div>
                 </div>
                 <div className="col-auto">
-                  <i className="fa-solid fa-school fa-2x  "></i>
+                  <i className="fa-solid fa-school fa-2x"></i>
                 </div>
               </div>
             </div>
@@ -28,12 +28,15 @@ const Dashboard = () => {
               <div className="row no-gutters align-items-center">
                 <div className="col mr-2">
                   <div className="text-xs text-success text-uppercase mb-1">
-                    <b>Total de adeudos</b>
+                    <b>ESTADO DEL SISTEMA</b>
                   </div>
-                  <div className="h5 mb-0 text-gray-800">$2,500.00 </div>
+                  <div className="h5 mb-0 text-gray-800">
+                    Funcionando sin interrupciones{" "}
+                    <i className="fa-solid fa-check-circle text-success"></i>
+                  </div>
                 </div>
                 <div className="col-auto">
-                  <i className="fa-solid fa-money-bill fa-2x  "></i>
+                  <i className="fa-solid fa-heart-pulse fa-2x"></i>
                 </div>
               </div>
             </div>
@@ -46,20 +49,19 @@ const Dashboard = () => {
               <div className="row no-gutters align-items-center">
                 <div className="col mr-2">
                   <div className="text-xs text-success text-uppercase mb-1">
-                    <b>Informacion importante</b>
+                    <b>ACTUALIZACIONES PENDIENTES</b>
                   </div>
                   <div className="h5 mb-0 text-gray-800">
-                    - Beca benito juarez disponible
+                    {/* Muestra la versión actual */}
+                    <span>Versión actual: <b className="text-primary">1.0.0</b></span>
                   </div>
-                  <div className="h5 mb-0 text-gray-800">
-                    - Ruta nueva disponible
-                  </div>
-                  <div className="h5 mb-0 text-gray-800">
-                    - Promociones de pronto pago
+                  <div className="mt-2">
+                    {/* Muestra la cantidad de actualizaciones pendientes */}
+                    <span><b className="text-primary">3</b> actualizaciones pendientes</span>
                   </div>
                 </div>
-                <div className="col-auto mb-4">
-                  <i className="fa-solid fa-calendar fa-2x"></i>
+                <div className="col-auto">
+                  <i className="fa-solid fa-arrow-up-a-z fa-2x"></i>
                 </div>
               </div>
             </div>
@@ -69,13 +71,14 @@ const Dashboard = () => {
         <div className="col-xl-12 col-md-6 mb-4">
           <div className="card shadow h-100 py-2 card2">
             <div className="card-body">
-              <img src="../../src/assets/images/bg/calendario.png" className="img-fluid" alt="calendario" />
-
+              <img
+                src="../../src/assets/images/bg/calendario.png"
+                className="img-fluid"
+                alt="calendario"
+              />
             </div>
           </div>
         </div>
-
-
       </div>
     </div>
   );

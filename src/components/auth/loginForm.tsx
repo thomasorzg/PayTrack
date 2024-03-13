@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import functionService from '../../services/functionsService';
 
 interface LoginFormProps {
     onLoginSuccess: (formData: { email: string, password: string }) => void;
@@ -13,7 +14,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
         event.preventDefault();
 
         if (!email || !password) {
-            alert("Por favor, completa todos los campos.");
+            functionService.presentAlertError("Por favor, completa todos los campos");
             return;
         }
 

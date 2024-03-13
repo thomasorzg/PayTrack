@@ -1,12 +1,11 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   Navbar,
   Collapse,
   Nav,
   NavItem,
   NavbarBrand,
-  UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
@@ -16,13 +15,13 @@ import {
 import user1 from "../../assets/images/users/user4.jpg";
 import Logo from "./logo";
 import { useAuth } from "../../context/AuthContext";
+import functionsService from "../../services/functionsService";
 
 const Header = () => {
-  const navigate = useNavigate();
-
   const [isOpen, setIsOpen] = React.useState(false);
-
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
+  const [formattedDateTime, setFormattedDateTime] = React.useState(functionsService.formatCurrentDateTime());
+  const { user, isAuthenticated, logout } = useAuth();
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
   const Handletoggle = () => {
@@ -36,8 +35,14 @@ const Header = () => {
     }
   };
 
-  const { user, isAuthenticated, logout } = useAuth();
-  
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setFormattedDateTime(functionsService.formatCurrentDateTime());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <Navbar color="white" light expand="md" className="fix-header">
       <div className="d-flex align-items-center">
@@ -75,26 +80,8 @@ const Header = () => {
       <Collapse navbar isOpen={isOpen}>
         <Nav className="me-auto" navbar>
           <NavItem>
-            <Link to="/starter" className="nav-link">
-              Starter
-            </Link>
+            <span>{formattedDateTime}</span>
           </NavItem>
-          <NavItem>
-            <Link to="/about" className="nav-link">
-              About
-            </Link>
-          </NavItem>
-          <UncontrolledDropdown inNavbar nav>
-            <DropdownToggle caret nav>
-              DD Menu
-            </DropdownToggle>
-            <DropdownMenu end>
-              <DropdownItem>Option 1</DropdownItem>
-              <DropdownItem>Option 2</DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem>Reset</DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
         </Nav>
         <Dropdown isOpen={dropdownOpen} toggle={toggle}>
           <DropdownToggle color="transparent">
