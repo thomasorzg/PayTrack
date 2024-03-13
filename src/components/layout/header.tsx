@@ -94,7 +94,6 @@ const Header = () => {
             ></img>
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem header>Info</DropdownItem>
             <DropdownItem>Perfil</DropdownItem>
             <DropdownItem>Cambiar Contraseña</DropdownItem>
             <DropdownItem divider />
