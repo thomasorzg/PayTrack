@@ -1,6 +1,7 @@
 import React from "react";
 
 const Login = React.lazy(() => import("../pages/auth/login"));
+const pagosAcademicos = React.lazy(() => import("../pages/pagosAcademicos/pagosAcademicos"));
 const Dashboard = React.lazy(() => import("../pages/dashboard/dashboard"));
 const Users = React.lazy(() => import("../pages/users/users"));
 const Payments = React.lazy(() => import("../pages/payments/payments"));
@@ -15,34 +16,46 @@ const routes = [
         fullLayout: false
     },
     {
+        path: "/pagosAcademicos",
+        element: pagosAcademicos,
+        isPrivate: true,
+        fullLayout: false,
+        data: { roles: ['STUDENT'] }
+    },
+    {
         path: "/dashboard",
         element: Dashboard,
         isPrivate: true,
-        fullLayout: true
+        fullLayout: true,
+        data: { roles: ['SUPERADMIN', 'ADMIN'] }
     },
     {
         path: "/users",
         element: Users,
         isPrivate: true,
-        fullLayout: true
+        fullLayout: true,
+        data: { roles: ['SUPERADMIN', 'ADMIN'] }
     },
     {
         path: "/payments",
         element: Payments,
         isPrivate: true,
-        fullLayout: true
+        fullLayout: true,
+        data: { roles: ['SUPERADMIN', 'ADMIN'] }
     },
     {
         path: "/reports",
         element: Reports,
         isPrivate: true,
-        fullLayout: true
+        fullLayout: true,
+        data: { roles: ['SUPERADMIN', 'ADMIN'] }
     },
     {
         path: "/settings",
         element: Settings,
         isPrivate: true,
-        fullLayout: true
+        fullLayout: true,
+        data: { roles: ['SUPERADMIN'] }
     },
     {
         path: "*",
