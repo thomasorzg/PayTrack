@@ -9,6 +9,8 @@ const Payments = () => {
   const [payments, setPayments] = useState([]);
   const [selectedFolio, setSelectedFolio] = useState(null);
 
+  console.log(selectedFolio);
+
   useEffect(() => {
     fetchPayments();
   }, []);

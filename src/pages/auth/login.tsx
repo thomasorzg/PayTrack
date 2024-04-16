@@ -12,6 +12,8 @@ const Login = () => {
     const { setLogin } = useAuth();
     const [loading, setLoading] = useState(false);
 
+    console.log(loading); 
+
     const handleLoginSuccess = async (formData: { email: string, password: string }) => {
         setLoading(true);
         try {
