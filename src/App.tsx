@@ -16,33 +16,27 @@ function App() {
 
             // Construye el elemento de la ruta, envolviéndolo en PrivateRoute si es necesario.
             const routeElement = route.isPrivate ? (
-              <Route
-                key={index}
-                path={route.path}
-                element={
-                  <PrivateRoute roles={roles}>
-                    <RouteComponent />
-                  </PrivateRoute>
-                }
-              />
+              <PrivateRoute roles={roles}>
+                <RouteComponent />
+              </PrivateRoute>
             ) : (
-              <Route key={index} path={route.path} element={<RouteComponent />} />
+              <RouteComponent />
             );
 
             // Si la ruta debe usar FullLayout, renderiza dentro de este.
             // De lo contrario, renderiza el componente directamente.
-            return route.fullLayout ? (
+            return (
               <Route
                 key={index}
                 path={route.path}
                 element={
-                  <FullLayout>
-                    {routeElement}
-                  </FullLayout>
+                  route.fullLayout ? (
+                    <FullLayout>{routeElement}</FullLayout>
+                  ) : (
+                    routeElement
+                  )
                 }
               />
-            ) : (
-              routeElement
             );
           })}
         </Routes>

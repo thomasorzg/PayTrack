@@ -2,9 +2,11 @@ import axios from 'axios';
 
 interface LoginResponse {
     token: string;
+    user: any;
 }
 
-const API_BASE_URL = 'http://localhost:8080/crud';
+const API_BASE_URL_DEFAULT = 'http://localhost:8080'; // Default
+const API_BASE_URL = 'http://localhost:8080/crud'; // CRUD
 
 const getAuthHeaders = () => {
     return {
@@ -19,6 +21,31 @@ const apiService = {
     login: async (email: string, password: string): Promise<LoginResponse> => {
         try {
             const response = await axios.post<LoginResponse>('http://localhost:8080/auth/users', { email, password });
+            return response.data;
+        } catch (error: any) {
+            throw error.response.data;
+        }
+    },
+
+    // Función para crear una sesión de pago
+    createCheckoutSession: async (items: any) => {
+        try {
+            const response = await axios.post(`${API_BASE_URL_DEFAULT}/stripe/create-checkout-session`, items, {
+                headers: getAuthHeaders()
+            });
+
+            return response;
+        } catch (error: any) {
+            throw error.response.data;
+        }
+    },
+
+    // Función para obtener los productos de Stripe
+    fetchStripeProducts: async () => {
+        try {
+            const response = await axios.get(`${API_BASE_URL_DEFAULT}/stripe/products`, {
+                headers: getAuthHeaders()
+            });
             return response.data;
         } catch (error: any) {
             throw error.response.data;

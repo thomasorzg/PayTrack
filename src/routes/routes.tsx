@@ -1,4 +1,5 @@
 import React from "react";
+import HomeRedirect from "./HomeRedirect";
 
 const Login = React.lazy(() => import("../pages/auth/login"));
 const pagosAcademicos = React.lazy(() => import("../pages/pagosAcademicos/pagosAcademicos"));
@@ -65,7 +66,7 @@ const routes = [
     // Temporal con Dashboard con isPrivate true
     {
         path: "/",
-        element: Dashboard,
+        element: HomeRedirect,
         isPrivate: true,
         fullLayout: true
     }

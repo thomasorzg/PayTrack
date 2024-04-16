@@ -51,8 +51,10 @@ const Header = () => {
             <Logo />
           </Link>
         </div>
-        <NavbarBrand href="/">
-          <h1 className="d-lg-none">PayTrack</h1>
+        <NavbarBrand>
+          <Link to="/" className="navbar-brand">
+            <h1 className="d-lg-none">PayTrack</h1>
+          </Link>
         </NavbarBrand>
         <Button
           color="primary"

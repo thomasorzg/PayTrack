@@ -173,7 +173,7 @@ const Users = () => {
             <Column key={col.field} field={col.field} header={col.header} sortable />
           ))}
 
-          <Column body={isActiveTemplate} header="Active" sortable />
+          <Column body={isActiveTemplate} header="Activo" sortable />
 
           <Column body={actionBodyTemplate} header="Acciones" />
         </DataTable>

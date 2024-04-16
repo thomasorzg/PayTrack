@@ -19,7 +19,8 @@ const Login = () => {
             const response = await apiService.login(email, password);
 
             setLogin(response); // Aquí pasamos directamente la respuesta del servidor
-            navigate('/dashboard');
+
+            navigate(response.user.role === 'STUDENT' ? '/pagosAcademicos' : '/dashboard');
         } catch (error: any) {
             functionsService.presentAlertError(error.message);
         } finally {
