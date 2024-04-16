@@ -1,0 +1,9 @@
+.gradient-background {
+    min-height: 100vh;
+    padding: 20px;
+  }
+  
+  .logo {
+    max-width: 150px; /* Puedes ajustar este valor según tus necesidades */
+    height: auto;
+}

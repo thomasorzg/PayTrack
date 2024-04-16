@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import LoginForm from '../../components/auth/loginForm';
 import { Card, CardBody, Col, Container, Row } from 'reactstrap';
 import functionsService from '../../services/functionsService';
+import '../auth/login.css';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -29,11 +30,14 @@ const Login = () => {
     };
 
     return (
-        <Container className="d-flex justify-content-center align-items-center vh-100">
+        <Container className="d-flex justify-content-center align-items-center gradient-background">
             <Row className="justify-content-center">
                 <Col md="12">
                     <Card>
                         <CardBody>
+                        <div className="text-center mb-4">
+                                <img src="../../src/assets/images/logos/logouts.jpg" alt="Logo" className="logo"/>
+                            </div>                            
                             <h1 className="text-center">Inicio de sesión</h1>
                             <LoginForm onLoginSuccess={handleLoginSuccess} />
                         </CardBody>
