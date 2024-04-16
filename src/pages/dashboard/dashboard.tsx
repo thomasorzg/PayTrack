@@ -200,7 +200,7 @@ const Dashboard = () => {
                 <div className="card shadow h-100 py-2 card2">
                   <div className="card-body">
                     <img
-                      src="../../src/assets/images/bg/calendario.png"
+                      src="https://uts.sonora.gob.mx/images/documentos/fotos-uts/calendario-escolar/calenedario-escolar-23-24.jpg"
                       className="img-fluid"
                       alt="calendario"
                     />

@@ -38,7 +38,7 @@ const Login = () => {
                     <Card>
                         <CardBody>
                         <div className="text-center mb-4">
-                                <img src="../../src/assets/images/logos/logouts.jpg" alt="Logo" className="logo"/>
+                                <img src="https://sic.cultura.gob.mx/galeria_imagen/5ce3d78fb2890logo.jpg" alt="Logo" className="logo"/>
                             </div>                            
                             <h1 className="text-center">Inicio de sesión</h1>
                             <LoginForm onLoginSuccess={handleLoginSuccess} />

@@ -17,6 +17,7 @@
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.2",
     "date-fns": "^3.4.0",
+    "firebase-tools": "^13.7.2",
     "jwt-decode": "^4.0.0",
     "primeicons": "^7.0.0",
     "primereact": "^10.6.3",
