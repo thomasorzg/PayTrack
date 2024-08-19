@@ -6,6 +6,7 @@ const pagosAcademicos = React.lazy(() => import("../pages/pagosAcademicos/pagosA
 const Dashboard = React.lazy(() => import("../pages/dashboard/dashboard"));
 const Users = React.lazy(() => import("../pages/users/users"));
 const Payments = React.lazy(() => import("../pages/payments/payments"));
+const Conceptos = React.lazy(() => import("../pages/conceptos/conceptos"));
 const Reports = React.lazy(() => import("../pages/reports/reports"));
 const Settings = React.lazy(() => import("../pages/settings/settings"));
 const NotFound = React.lazy(() => import("../pages/notfound/notfound"));
@@ -13,6 +14,11 @@ const NotFound = React.lazy(() => import("../pages/notfound/notfound"));
 const routes = [
     {
         path: "/login",
+        element: Login,
+        fullLayout: false
+    },
+    {
+        path: "/admin/login",
         element: Login,
         fullLayout: false
     },
@@ -40,6 +46,13 @@ const routes = [
     {
         path: "/payments",
         element: Payments,
+        isPrivate: true,
+        fullLayout: true,
+        data: { roles: ['SUPERADMIN', 'ADMIN'] }
+    },
+    {
+        path: "/conceptos",
+        element: Conceptos,
         isPrivate: true,
         fullLayout: true,
         data: { roles: ['SUPERADMIN', 'ADMIN'] }

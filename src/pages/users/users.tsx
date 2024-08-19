@@ -129,9 +129,14 @@ const Users = () => {
       functionsService.presentAlertError(error.message);
     }
   };
-
+  
   const actionBodyTemplate = (rowData: any) => {
-    return <ActionButtons rowData={rowData} onEdit={onEdit} onDelete={onDelete} />;
+    // Si el usuario es STUDENT no puede eliminar ni editar
+    if (rowData.role === "STUDENT") {
+      return <span className="badge bg-secondary">Estudiante</span>;
+    } else {
+      return <ActionButtons rowData={rowData} onEdit={onEdit} onDelete={onDelete} />;
+    }
   };
 
   const isActiveTemplate = (rowData: any) => {
@@ -194,7 +199,6 @@ const Users = () => {
             <label htmlFor="role">Rol</label>
             <select id="role" name="role" value={newUser.role} onChange={handleChange} className="form-control" required>
               <option value="" disabled selected>Selecciona un rol...</option>
-              <option value="STUDENT">Estudiante</option>
               <option value="ADMIN">Administrador</option>
               <option value="SUPERADMIN">Super Administrador</option>
             </select>

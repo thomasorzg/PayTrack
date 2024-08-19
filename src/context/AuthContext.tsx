@@ -3,6 +3,7 @@ import React, { createContext, useState, useContext, useCallback, useEffect } fr
 interface UserState {
     id: string;
     name: string;
+    matricula: string;
     email: string;
     role: string;
 }

@@ -151,7 +151,7 @@ const PagosAcademicos = () => {
         <div className="card shadow mb-4">
         <div className="card-header py-3 d-flex justify-content-between align-items-center">
           <div>
-            <h6 className="m-0 font-weight-bold text-primary">{isAuthenticated && user && user?.name} - Matrícula: L53456789</h6>
+            <h6 className="m-0 font-weight-bold text-primary">{isAuthenticated && user && user?.name} - Matrícula: {isAuthenticated && user && user?.matricula}</h6>
           </div>
           <button type="button" className="btn btn-danger" onClick={logout}>Cerrar Sesión</button>
         </div>

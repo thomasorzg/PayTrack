@@ -1,83 +1,57 @@
-/* import React, { useState, FormEvent } from 'react';
-import { Button, Form, FormGroup, Label, Input, Fade } from 'reactstrap';
+import React, { useState } from 'react';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import functionService from '../../services/functionsService';
 
 interface LoginFormProps {
-    onLogin: (enrollment: string, nip: string) => void;
-    onCancel: () => void;
+    onLoginSuccess: (formData: { matricula: string, password: string }) => void;
 }
 
-const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onCancel }) => {
-    const [enrollment, setEnrollment] = useState<string>('');
-    const [nip, setNip] = useState<string>('');
-    const [enrollmentExists, setEnrollmentExists] = useState<boolean>(false);
-    const [isChecking, setIsChecking] = useState<boolean>(false);
+const LoginFormStudent: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
+    const [matricula, setMatricula] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
 
-    // Simulando la verificación de la matrícula (se hará la petición al servidor en la versión final)
-    const checkEnrollmentExists = async (_enrollment: string): Promise<boolean> => {
-        setIsChecking(true);
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setIsChecking(false);
-        // Simulamos que cualquier matrícula existe
-        return true;
-    };
-
-    const handleEnrollmentSubmit = async (event: FormEvent) => {
+    const handleLogin = (event: React.FormEvent) => {
         event.preventDefault();
-        const exists = await checkEnrollmentExists(enrollment);
-        setEnrollmentExists(exists);
-    };
 
-    const handleLogin = (event: FormEvent) => {
-        event.preventDefault();
-        onLogin(enrollment, nip);
+        if (!matricula || !password) {
+            functionService.presentAlertError("Por favor, completa todos los campos");
+            return;
+        }
+
+        onLoginSuccess({ matricula, password });
     };
 
     return (
-        <Form>
-            {!enrollmentExists && (
-                <FormGroup>
-                    <Label for="enrollment">Matrícula</Label>
-                    <Input
-                        type="text"
-                        name="enrollment"
-                        id="enrollment"
-                        placeholder="Ingresa tu matrícula"
-                        value={enrollment}
-                        onChange={e => setEnrollment(e.target.value)}
-                        disabled={isChecking}
-                        style={{ marginBottom: '1rem' }}
-                    />
-                    <Button color="primary" block onClick={handleEnrollmentSubmit} disabled={isChecking}>
-                        {isChecking ? 'Verificando...' : 'Verificar Matrícula'}
-                    </Button>
-                </FormGroup>
-            )}
+        <Form onSubmit={handleLogin}>
+            <FormGroup>
+                <Label for="matricula">Matrícula</Label>
+                <Input
+                    type="text"
+                    name="matricula"
+                    id="matricula"
+                    placeholder="Introduce tu matrícula"
+                    value={matricula}
+                    onChange={(e) => setMatricula(e.target.value)}
+                />
+            </FormGroup>
 
-            <Fade in={enrollmentExists} tag="div">
-                {enrollmentExists && (
-                    <>
-                        <FormGroup>
-                            <Label for="nip">NIP</Label>
-                            <Input
-                                type="password"
-                                name="nip"
-                                id="nip"
-                                placeholder="Ingresa tu NIP"
-                                value={nip}
-                                onChange={e => setNip(e.target.value)}
-                                style={{ marginBottom: '1rem' }}
-                            />
-                        </FormGroup>
-                        <Button color="danger" block onClick={handleLogin}>Log In</Button>
-                        <CardFooter className="text-center" style={{ marginTop: '1rem' }}>
-                            <Button color="secondary" block onClick={onCancel}>Cancelar</Button>
-                        </CardFooter>
-                    </>
-                )}
-            </Fade>
+            <FormGroup>
+                <Label for="password">NIP</Label>
+                <Input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Introduce tu contraseña"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+            </FormGroup>
+
+            <Button color="primary" block type="submit">
+                Iniciar sesión
+            </Button>
         </Form>
     );
 };
 
-export default LoginForm;
- */
+export default LoginFormStudent;

@@ -96,9 +96,6 @@ const Header = () => {
             ></img>
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem>Perfil</DropdownItem>
-            <DropdownItem>Cambiar Contraseña</DropdownItem>
-            <DropdownItem divider />
             <DropdownItem onClick={logout}>Cerrar sesión</DropdownItem>
           </DropdownMenu>
         </Dropdown>

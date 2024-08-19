@@ -5,8 +5,7 @@ interface LoginResponse {
     user: any;
 }
 
-const API_BASE_URL_DEFAULT = 'https://paytrack-backend-0b0edf078655.herokuapp.com'; // Default
-const API_BASE_URL = 'https://paytrack-backend-0b0edf078655.herokuapp.com/crud'; // CRUD
+const API_BASE_URL = 'http://localhost:8080';
 
 const getAuthHeaders = () => {
     return {
@@ -20,7 +19,17 @@ const apiService = {
     // Función para iniciar sesión
     login: async (email: string, password: string): Promise<LoginResponse> => {
         try {
-            const response = await axios.post<LoginResponse>('https://paytrack-backend-0b0edf078655.herokuapp.com/auth/users', { email, password });
+            const response = await axios.post<LoginResponse>(`${API_BASE_URL}/auth/users`, { email, password });
+            return response.data;
+        } catch (error: any) {
+            throw error.response.data;
+        }
+    },
+
+    // Función para iniciar sesión para estudiantes
+    loginStudent: async (matricula: string, password: string): Promise<LoginResponse> => {
+        try {
+            const response = await axios.post<LoginResponse>(`${API_BASE_URL}/auth/student/users`, { matricula, password });
             return response.data;
         } catch (error: any) {
             throw error.response.data;
@@ -30,7 +39,7 @@ const apiService = {
     // Función para crear una sesión de pago
     createCheckoutSession: async (items: any) => {
         try {
-            const response = await axios.post(`${API_BASE_URL_DEFAULT}/stripe/create-checkout-session`, items, {
+            const response = await axios.post(`${API_BASE_URL}/stripe/create-checkout-session`, items, {
                 headers: getAuthHeaders()
             });
 
@@ -43,7 +52,18 @@ const apiService = {
     // Función para obtener los productos de Stripe
     fetchStripeProducts: async () => {
         try {
-            const response = await axios.get(`${API_BASE_URL_DEFAULT}/stripe/products`, {
+            const response = await axios.get(`${API_BASE_URL}/stripe/products`, {
+                headers: getAuthHeaders()
+            });
+            return response.data;
+        } catch (error: any) {
+            throw error.response.data;
+        }
+    },
+
+    createStripeProduct: async (product: any) => {
+        try {
+            const response = await axios.post(`${API_BASE_URL}/stripe/create-product`, product, {
                 headers: getAuthHeaders()
             });
             return response.data;
@@ -55,7 +75,7 @@ const apiService = {
     // Función para crear un registro
     create: async (document: any, data: any) => {
         try {
-            const response = await axios.post(`${API_BASE_URL}/${document}`, data, {
+            const response = await axios.post(`${API_BASE_URL}/crud/${document}`, data, {
                 headers: getAuthHeaders()
             });
             return response.data;
@@ -67,7 +87,7 @@ const apiService = {
     // Función para buscar todos los registros
     findAll: async (document: any, queryParams = '') => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/${document}?${queryParams}`, {
+            const response = await axios.get(`${API_BASE_URL}/crud/${document}?${queryParams}`, {
                 headers: getAuthHeaders()
             });
             return response.data;
@@ -79,7 +99,7 @@ const apiService = {
     // Función para buscar un registro por ID
     findOne: async (document: any, id: any) => {
         try {
-            const response = await axios.get(`${API_BASE_URL}/${document}/${id}`, {
+            const response = await axios.get(`${API_BASE_URL}/crud/${document}/${id}`, {
                 headers: getAuthHeaders()
             });
             return response.data;
@@ -91,7 +111,7 @@ const apiService = {
     // Función para actualizar un registro
     update: async (document: any, id: any, data: any) => {
         try {
-            const response = await axios.put(`${API_BASE_URL}/${document}/${id}`, data, {
+            const response = await axios.put(`${API_BASE_URL}/crud/${document}/${id}`, data, {
                 headers: getAuthHeaders()
             });
             return response.data;
@@ -103,7 +123,7 @@ const apiService = {
     // Función para eliminar un registro
     delete: async (document: any, id: any) => {
         try {
-            const response = await axios.delete(`${API_BASE_URL}/${document}/${id}`, {
+            const response = await axios.delete(`${API_BASE_URL}/crud/${document}/${id}`, {
                 headers: getAuthHeaders()
             });
             return response.data;
@@ -115,7 +135,7 @@ const apiService = {
     // Función para eliminar todos los registros
     deleteAll: async (document: any) => {
         try {
-            const response = await axios.delete(`${API_BASE_URL}/${document}`, {
+            const response = await axios.delete(`${API_BASE_URL}/crud/${document}`, {
                 headers: getAuthHeaders()
             });
             return response.data;

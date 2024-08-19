@@ -1,18 +1,18 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import apiService from '../../services/apiService';
 import { useAuth } from '../../context/AuthContext';
-import LoginForm from '../../components/auth/loginForm';
+import LoginFormStudent from '../../components/auth/loginStudent';
 import { Card, CardBody, Col, Container, Row } from 'reactstrap';
 import functionsService from '../../services/functionsService';
 import '../auth/login.css';
+import LoginForm from '../../components/auth/loginForm';
 
 const Login = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const { setLogin } = useAuth();
     const [loading, setLoading] = useState(false);
-
-    console.log(loading); 
 
     const handleLoginSuccess = async (formData: { email: string, password: string }) => {
         setLoading(true);
@@ -23,7 +23,24 @@ const Login = () => {
 
             setLogin(response); // Aquí pasamos directamente la respuesta del servidor
 
-            navigate(response.user.role === 'STUDENT' ? '/pagosAcademicos' : '/dashboard');
+            navigate('/dashboard');
+        } catch (error: any) {
+            functionsService.presentAlertError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleLoginSuccess_student = async (formData: { matricula: string, password: string }) => {
+        setLoading(true);
+        try {
+            const { matricula, password } = formData;
+
+            const response = await apiService.loginStudent(matricula, password);
+
+            setLogin(response); // Aquí pasamos directamente la respuesta del servidor
+
+            navigate('/pagosAcademicos');
         } catch (error: any) {
             functionsService.presentAlertError(error.message);
         } finally {
@@ -37,11 +54,17 @@ const Login = () => {
                 <Col md="12">
                     <Card>
                         <CardBody>
-                        <div className="text-center mb-4">
+                            <div className="text-center mb-4">
                                 <img src="https://sic.cultura.gob.mx/galeria_imagen/5ce3d78fb2890logo.jpg" alt="Logo" className="logo"/>
-                            </div>                            
-                            <h1 className="text-center">Inicio de sesión</h1>
-                            <LoginForm onLoginSuccess={handleLoginSuccess} />
+                            </div>
+                            <h1 className="text-center">
+                                {location.pathname.includes('/admin/login') ? 'Inicio de sesión' : 'Inicio de sesión para Estudiantes'}
+                            </h1>
+                            {location.pathname.includes('/admin/login') ? (
+                                <LoginForm onLoginSuccess={handleLoginSuccess} />
+                            ) : (
+                                <LoginFormStudent onLoginSuccess={handleLoginSuccess_student} />
+                            )}
                         </CardBody>
                     </Card>
                 </Col>

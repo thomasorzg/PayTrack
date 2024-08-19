@@ -18,6 +18,11 @@ const navigation = [
     icon: "fa fa-money"
   },
   {
+    title: "Conceptos",
+    href: "/conceptos",
+    icon: "fa fa-list-alt"
+  },
+  {
     title: "Reportes",
     href: "/reports",
     icon: "fa fa-file"

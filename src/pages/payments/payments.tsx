@@ -61,11 +61,11 @@ const Payments = () => {
 
   return (
     <div>
-      <h1>Payments</h1>
+      <h1>Pagos</h1>
 
       <div className="card">
         <DataTable value={payments} tableStyle={{ minWidth: "50rem" }} paginator rows={10} stripedRows>
-          <Column field="amount" header="Monto" sortable />
+          <Column field="amount" header="Monto" sortable body={(rowData: any) => `$${rowData.amount.toFixed(2)}`} />
           <Column field="name" header="Titular" sortable />
           <Column field="email" header="Correo electrónico" sortable />
           <Column field="items" header="Producto" sortable />
