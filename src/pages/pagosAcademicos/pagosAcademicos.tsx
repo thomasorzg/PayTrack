@@ -14,7 +14,7 @@ type ItemCarrito = {
 interface StripePrice {
   id: string;
   unit_amount: number;
-}
+} 
 
 interface StripeProduct {
   id: string;
@@ -29,20 +29,27 @@ const PagosAcademicos = () => {
     const { user, isAuthenticated, logout } = useAuth();
     const [carrito, setCarrito] = useState<ItemCarrito[]>([]);
     const [products, setProducts] = useState<ProductsState>([]);
+    const [deuda, setDeuda] = useState<number>(0); // Estado para almacenar la deuda simulada
 
     useEffect(() => {
       const loadProducts = async () => {
         try {
           const products = await apiService.fetchStripeProducts();
-
           setProducts(products);
         } catch (error) {
           console.error('Error fetching products:', error);
           functionsService.presentAlertError("Failed to load Stripe products.");
         }
       };
+
+      const checkDeuda = () => {
+        // Simulamos la deuda aquí
+        const simulatedDeuda = 430.00; // Cambia este valor para simular diferentes montos de deuda
+        setDeuda(simulatedDeuda); // Almacena la deuda simulada en el estado
+      };
       
       loadProducts();
+      checkDeuda(); // Llamamos a la función de deuda simulada
       checkPaymentSuccess();
     }, [location.search]);
 
@@ -59,7 +66,7 @@ const PagosAcademicos = () => {
             
             Swal.fire({
               title: '¡Pago realizado!',
-              text: 'Tú pago ha sido procesado exitosamente.',
+              text: 'Tu pago ha sido procesado exitosamente.',
               icon: 'success',
               confirmButtonText: 'Entendido'
             });
@@ -71,6 +78,11 @@ const PagosAcademicos = () => {
     };
 
     const agregarAlCarrito = () => {
+        if (deuda > 0) {
+          functionsService.presentAlertError("No puedes agregar productos al carrito hasta que tu deuda esté saldada.");
+          return;
+        }
+
         const select = document.getElementById('conceptoPago') as HTMLSelectElement | null;
         
         if (select && select.selectedIndex > 0) {
@@ -153,15 +165,24 @@ const PagosAcademicos = () => {
           <div>
             <h6 className="m-0 font-weight-bold text-primary">{isAuthenticated && user && user?.name} - Matrícula: {isAuthenticated && user && user?.matricula}</h6>
           </div>
-          <button type="button" className="btn btn-danger" onClick={logout}>Cerrar Sesión</button>
+          <button type="button" className="btn btn-danger" onClick={logout}>Cerrar sesión</button>
         </div>
-      </div>
+      </div> 
         <h1 className="text-center mb-4">Realizar Pagos Académicos</h1>
         <div className="card shadow mb-4">
           <div className="card-header py-3">
             <h6 className="m-0 font-weight-bold text-primary">Realizar Pago de:</h6>
           </div>
           <div className="card-body">
+            {deuda > 0 && (
+              <div className="alert alert-danger d-flex justify-content-between" role="alert">
+                <div className="mt-1">
+                <strong>❗❗Tienes un adeudo de ${deuda.toFixed(2)}. Por favor, salda tu deuda para poder agregar productos al carrito.❗❗</strong>
+                </div>
+                <button className="btn btn-secondary" >Generar convenio</button>
+              </div>
+            )}
+
             <form>
               <div className="form-group">
                 <select className="form-control" id="conceptoPago">
@@ -174,7 +195,9 @@ const PagosAcademicos = () => {
 
               <hr></hr>
 
-              <button type="button" className="btn btn-success mt-2" onClick={agregarAlCarrito}>Agregar al Carrito [<i className="fas fa-cart-plus"></i>]</button>
+              <button type="button" className="btn btn-success mt-2" onClick={agregarAlCarrito} disabled={deuda > 0}>
+                Agregar al Carrito [<i className="fas fa-cart-plus"></i>]
+              </button>
               &nbsp;
               <button type="button" className="btn btn-secondary mt-2 ml-2" onClick={limpiarCarrito}>Limpiar Carrito [<i className="fas fa-trash-alt"></i>]</button>
             </form>
@@ -219,7 +242,9 @@ const PagosAcademicos = () => {
               <div className="card-body">
                 <p>Subtotal: ${subtotal.toFixed(2)}</p>
                 <p>Total: ${total.toFixed(2)}</p>
-                <button type="button" className="btn btn-primary w-100" onClick={handleCheckout}>Pagar</button>
+                <button type="button" className="btn btn-primary w-100" onClick={handleCheckout} disabled={deuda > 0}>
+                  Pagar
+                </button>
               </div>
             </div>
           </div>
@@ -229,4 +254,3 @@ const PagosAcademicos = () => {
   };
   
   export default PagosAcademicos;
-  

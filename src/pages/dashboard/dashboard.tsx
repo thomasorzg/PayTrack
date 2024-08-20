@@ -1,82 +1,13 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Chart } from "primereact/chart";
-
-// Componentes de Tarjetas
-const UsersCard = () => (
-  <div className="col-xl-4 col-md-6 mb-4">
-    <div className="card shadow h-100 py-2 card2">
-      <div className="card-body">
-        <div className="row no-gutters align-items-center">
-          <div className="col mr-2">
-            <div className="text-xs text-success text-uppercase mb-1">
-              <b>TOTAL DE USUARIOS</b>
-            </div>
-            <div className="h5 mb-0 text-gray-800">34 usuarios registrados</div>
-          </div>
-          <div className="col-auto">
-            <i className="fa-solid fa-school fa-2x"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-const SystemStatusCard = () => (
-  <div className="col-xl-4 col-md-6 mb-4">
-    <div className="card shadow h-100 py-2 card2">
-      <div className="card-body">
-        <div className="row no-gutters align-items-center">
-          <div className="col mr-2">
-            <div className="text-xs text-success text-uppercase mb-1">
-              <b>ESTADO DEL SISTEMA</b>
-            </div>
-            <div className="h5 mb-0 text-gray-800">
-              Funcionando sin interrupciones{" "}
-              <i className="fa-solid fa-check-circle text-success"></i>
-            </div>
-          </div>
-          <div className="col-auto">
-            <i className="fa-solid fa-heart-pulse fa-2x"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-const UpdatesCard = () => (
-  <div className="col-xl-4 col-md-6 mb-4">
-    <div className="card shadow h-100 py-2 card2">
-      <div className="card-body">
-        <div className="row no-gutters align-items-center">
-          <div className="col mr-2">
-            <div className="text-xs text-success text-uppercase mb-1">
-              <b>ACTUALIZACIONES PENDIENTES</b>
-            </div>
-            <div className="h5 mb-0 text-gray-800">
-              {/* Muestra la versión actual */}
-              <span>
-                Versión actual: <b className="text-primary">1.0.0</b>
-              </span>
-            </div>
-            <div className="mt-2">
-              {/* Muestra la cantidad de actualizaciones pendientes */}
-              <span>
-                <b className="text-primary">3</b> actualizaciones pendientes
-              </span>
-            </div>
-          </div>
-          <div className="col-auto">
-            <i className="fa-solid fa-arrow-up-a-z fa-2x"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
+import apiService from "../../services/apiService";
+import UsersCard from "./UsersCard";
+import SystemStatusCard from "./SystemStatusCard";
+import UpdatesCard from "./UpdatesCard";
 
 const Dashboard = () => {
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [totalAlumnos, setTotalAlumnos] = useState(0);
   const [data, setData] = useState({
     labels: [],
     datasets: [],
@@ -118,6 +49,8 @@ const Dashboard = () => {
   });
 
   useEffect(() => {
+    fetchUsersData();
+
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue("--text-color");
     const textColorSecondary = documentStyle.getPropertyValue(
@@ -184,10 +117,23 @@ const Dashboard = () => {
     setOptions(chartOptions);
   }, []);
 
+  const fetchUsersData = async () => {
+    try {
+      let data = await apiService.findAll("users");
+
+      // Calcular el número total de usuarios y de alumnos
+      setTotalUsers(data.length);
+      setTotalAlumnos(data.filter((user: any) => user.role === "STUDENT").length);
+
+    } catch (error: any) {
+      console.error("Error al obtener los usuarios", error);
+    }
+  };
+
   return (
     <div>
       <div className="row">
-        <UsersCard />
+        <UsersCard totalUsers={totalUsers} totalAlumnos={totalAlumnos} />
         <SystemStatusCard />
         <UpdatesCard />
       </div>
@@ -195,12 +141,12 @@ const Dashboard = () => {
         <div className="col-xl-12 col-md-6 mb-4">
           <div className="card shadow h-100 py-2 card2">
             <div className="card-body">
-              <Chart type="bar" data={data} options={options} />
-              <div className="col-xl-12 col-md-6 mb-4">
+{/*               <Chart type="bar" data={data} options={options} />
+ */}              <div className="col-xl-12 col-md-6 mb-4">
                 <div className="card shadow h-100 py-2 card2">
                   <div className="card-body">
                     <img
-                      src="https://uts.sonora.gob.mx/images/documentos/fotos-uts/calendario-escolar/calenedario-escolar-23-24.jpg"
+                      src="https://scontent.fcen1-1.fna.fbcdn.net/v/t39.30808-6/427919911_706999904951192_8350894050844778251_n.png?_nc_cat=105&ccb=1-7&_nc_sid=cc71e4&_nc_eui2=AeE5NaW8isP1Dmhhg_FSvX-TLmbsY7g_L_wuZuxjuD8v_B3jVpNCj3iJhoYOqQfqkwYzOjz1xhiPPJHPOGjNBTsz&_nc_ohc=ea7Pl-4J0LoQ7kNvgFr92ur&_nc_ht=scontent.fcen1-1.fna&oh=00_AYAgxn9J1705Th1pV3H8Zt9Ih6c14gDsgU1W_bnddM2WUg&oe=66CA6099"
                       className="img-fluid"
                       alt="calendario"
                     />
